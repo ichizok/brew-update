@@ -1,0 +1,14 @@
+#!/bin/bash
+
+declare -r BREW=/usr/local/bin/brew
+declare -r BREW_LOG=~/Library/Logs/Homebrew/update.log
+
+$BREW update &>$BREW_LOG
+
+declare -r TERMINAL_NOTIFIER=/usr/local/bin/terminal-notifier
+
+[[ -x "$TERMINAL_NOTIFIER" ]] || exit 0
+
+if [[ -n "`$BREW outdated --quiet`" ]]; then
+    $TERMINAL_NOTIFIER -title Homebrew -message "Found outdated formulae"
+fi
