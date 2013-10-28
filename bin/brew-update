@@ -6,7 +6,7 @@ declare -r BREW_UPDATE_LOG="$BREW_LOGDIR/update.log"
 
 mkdir -p "$BREW_LOGDIR"
 
-"$BREW" update &>>"$BREW_UPDATE_LOG"
+"$BREW" update >>"$BREW_UPDATE_LOG" 2>&1
 
 declare -r TERMINAL_NOTIFIER="/usr/local/bin/terminal-notifier"
 
