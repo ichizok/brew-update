@@ -9,9 +9,10 @@ mkdir -p "$BREW_LOGDIR"
 "$BREW" update >>"$BREW_UPDATE_LOG" 2>&1
 
 declare -r TERMINAL_NOTIFIER="/usr/local/bin/terminal-notifier"
+declare -r APP_ID="com.googlecode.iterm2"
 
 [[ -x "$TERMINAL_NOTIFIER" ]] || exit 0
 
 if [[ -n "$($BREW outdated --quiet)" ]]; then
-    "$TERMINAL_NOTIFIER" -title Homebrew -message "Found outdated formulae"
+    "$TERMINAL_NOTIFIER" -title Homebrew -message "Found outdated formulae" -activate "$APP_ID"
 fi
