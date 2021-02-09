@@ -3,18 +3,18 @@
 <plist version="1.0">
 <dict>
 	<key>Label</key>
-	<string>net.homebrew.update</string>
+	<string>net.homebrew.update.{{ARCH}}</string>
 	<key>ProgramArguments</key>
 	<array>
 		<string>/bin/bash</string>
-                <string>{{HOMEBREW_PREFIX}}/bin/brew-update</string>
+		<string>{{HOMEBREW_PREFIX}}/bin/brew-update</string>
 	</array>
 	<key>StartCalendarInterval</key>
 	<dict>
 		<key>Hour</key>
-		<integer>12</integer>
+		<integer>{{UPDATE_HOUR}}</integer>
 		<key>Minute</key>
-		<integer>0</integer>
+		<integer>{{UPDATE_MINUTE}}</integer>
 	</dict>
 </dict>
 </plist>
