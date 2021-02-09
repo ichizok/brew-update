@@ -8,14 +8,15 @@ else
   PREFIX ?= /usr/local
 endif
 
-UPDATE_TIME ?= 12:00
+UPDATE_TIME ?= 00:00
 UPDATE_TIME_WORDS := $(subst :, ,$(UPDATE_TIME))
 UPDATE_HOUR := $(shell printf '%d' $(firstword $(UPDATE_TIME_WORDS)))
 UPDATE_MINUTE := $(shell printf '%d' $(lastword $(UPDATE_TIME_WORDS)))
 
 HOMEBREW_PREFIX := $(PREFIX)
 LAUNCH_AGENT_DIR := Library/LaunchAgents
-LAUNCH_AGENT_PLIST := net.homebrew.update.plist
+LAUNCH_AGENT_LABEL := net.homebrew.update
+LAUNCH_AGENT_PLIST := $(LAUNCH_AGENT_LABEL).$(ARCH).plist
 
 all: brew-update terminal-notifier
 
@@ -26,7 +27,7 @@ brew-update:
 		-e 's#{{ARCH}}#$(ARCH)#' \
 		-e 's#{{UPDATE_HOUR}}#$(UPDATE_HOUR)#' \
 		-e 's#{{UPDATE_MINUTE}}#$(UPDATE_MINUTE)#' \
-		$(LAUNCH_AGENT_DIR)/$(LAUNCH_AGENT_PLIST).in > ~/$(LAUNCH_AGENT_DIR)/$(LAUNCH_AGENT_PLIST:.plist=.$(ARCH).plist)
+		$(LAUNCH_AGENT_DIR)/$(LAUNCH_AGENT_LABEL).plist.in > ~/$(LAUNCH_AGENT_DIR)/$(LAUNCH_AGENT_PLIST)
 	launchctl load ~/$(LAUNCH_AGENT_DIR)/$(LAUNCH_AGENT_PLIST)
 
 terminal-notifier:
