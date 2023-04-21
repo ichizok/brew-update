@@ -33,7 +33,7 @@ proc_end
 proc_start
 
 printf "Remove broken symlink files... "
-find -L . -maxdepth 1 -type l -exec rm -f '{}' +
+find -L . Cask -maxdepth 1 -type l -exec rm -f '{}' +
 printf "done."
 
 proc_end
