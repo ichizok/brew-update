@@ -1,0 +1,22 @@
+#!/bin/sh
+set -eu
+
+readonly HOMEBREW_CACHE="${HOME}/Library/Caches/Homebrew"
+readonly HOMEBREW_DOWNLOADS="${HOMEBREW_CACHE}/downloads"
+
+DOWNLOADS_SIZE="$(du -hs "${HOMEBREW_DOWNLOADS}" | awk '{print$1}')"
+readonly DOWNLOADS_SIZE
+
+echo "Downloads size: ${DOWNLOADS_SIZE}"
+
+printf "\e[34m==> \e[1;30m"
+
+if [ "${DOWNLOADS_SIZE}" = 0B ]; then
+    printf "Nothing to do."
+else
+    printf "Cleanup... "
+    rm "${HOMEBREW_DOWNLOADS}"/*
+    printf "done."
+fi
+
+printf "\e[0m\n"

@@ -18,7 +18,7 @@ LAUNCH_AGENT_DIR := Library/LaunchAgents
 LAUNCH_AGENT_LABEL := net.homebrew.update
 LAUNCH_AGENT_PLIST := $(LAUNCH_AGENT_LABEL).$(ARCH).plist
 
-all: brew-update terminal-notifier
+all: brew-update brew-cacheclean terminal-notifier
 
 brew-update:
 	sed 's#{{HOMEBREW_PREFIX}}#$(HOMEBREW_PREFIX)#g' bin/$@.in > $(PREFIX)/bin/$@
@@ -29,6 +29,9 @@ brew-update:
 		-e 's#{{UPDATE_MINUTE}}#$(UPDATE_MINUTE)#' \
 		$(LAUNCH_AGENT_DIR)/$(LAUNCH_AGENT_LABEL).plist.in > ~/$(LAUNCH_AGENT_DIR)/$(LAUNCH_AGENT_PLIST)
 	launchctl load ~/$(LAUNCH_AGENT_DIR)/$(LAUNCH_AGENT_PLIST)
+
+brew-cacheclean:
+	install -p bin/$@ $(PREFIX)/bin
 
 terminal-notifier:
 	$(HOMEBREW_PREFIX)/bin/brew install $@
