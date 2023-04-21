@@ -1,10 +1,10 @@
-#!/bin/bash
+#!/bin/sh
 set -eu
 
-declare -r HOMEBREW_PREFIX="{{HOMEBREW_PREFIX}}"
-declare -r BREW=${HOMEBREW_PREFIX}/bin/brew
-declare -r BREW_LOGDIR=${HOME}/Library/Logs/Homebrew
-declare -r BREW_UPDATE_LOG=${BREW_LOGDIR}/update.log
+readonly HOMEBREW_PREFIX="{{HOMEBREW_PREFIX}}"
+readonly BREW="${HOMEBREW_PREFIX}/bin/brew"
+readonly BREW_LOGDIR="${HOME}/Library/Logs/Homebrew"
+readonly BREW_UPDATE_LOG="${BREW_LOGDIR}/update.log"
 
 mkdir -p "${BREW_LOGDIR}"
 
@@ -18,11 +18,11 @@ EOT
 
 "${BREW}" update >>"${BREW_UPDATE_LOG}" 2>&1
 
-declare -r TERMINAL_NOTIFIER=${HOMEBREW_PREFIX}/bin/terminal-notifier
-declare -r APP_ID=com.apple.Terminal
+readonly TERMINAL_NOTIFIER="${HOMEBREW_PREFIX}/bin/terminal-notifier"
+readonly APP_ID=com.apple.Terminal
 
-[[ -x "${TERMINAL_NOTIFIER}" ]] || exit 0
+[ -x "${TERMINAL_NOTIFIER}" ] || exit 0
 
-if [[ -n "$("${BREW}" outdated --quiet)" ]]; then
+if [ -n "$("${BREW}" outdated --quiet)" ]; then
     "${TERMINAL_NOTIFIER}" -title Homebrew -message "Found outdated formulae" -sender "${APP_ID}"
 fi
