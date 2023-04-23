@@ -18,9 +18,9 @@ LAUNCH_AGENT_DIR := Library/LaunchAgents
 LAUNCH_AGENT_LABEL := net.homebrew.update
 LAUNCH_AGENT_PLIST := $(LAUNCH_AGENT_LABEL).$(ARCH).plist
 
-all: brew-update brew-cacheclean terminal-notifier
+all: brew-update-log brew-cacheclean terminal-notifier
 
-brew-update:
+brew-update-log:
 	sed 's#{{HOMEBREW_PREFIX}}#$(HOMEBREW_PREFIX)#g' bin/$@.in > $(PREFIX)/bin/$@
 	chmod +x $(PREFIX)/bin/$@
 	sed -e 's#{{HOMEBREW_PREFIX}}#$(HOMEBREW_PREFIX)#g' \

@@ -7,7 +7,7 @@
 	<key>ProgramArguments</key>
 	<array>
 		<string>/bin/bash</string>
-		<string>{{HOMEBREW_PREFIX}}/bin/brew-update</string>
+		<string>{{HOMEBREW_PREFIX}}/bin/brew-update-log</string>
 	</array>
 	<key>StartCalendarInterval</key>
 	<dict>
