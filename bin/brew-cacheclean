@@ -1,12 +1,12 @@
-#!/bin/sh
+#!/bin/bash
 set -eu
 
-readonly HOMEBREW_CACHE="${HOME}/Library/Caches/Homebrew"
+declare -r HOMEBREW_CACHE="${HOME}/Library/Caches/Homebrew"
 
 cd "${HOMEBREW_CACHE}"
 
 DOWNLOADS_SIZE="$(du -hs downloads | awk '{print$1}')"
-readonly DOWNLOADS_SIZE
+declare -r DOWNLOADS_SIZE
 
 echo "Downloads size: ${DOWNLOADS_SIZE}"
 
@@ -20,7 +20,7 @@ proc_end() {
 
 proc_start
 
-if [ "${DOWNLOADS_SIZE}" = 0B ]; then
+if [[ "${DOWNLOADS_SIZE}" = 0B ]]; then
     printf "No bottle."
 else
     printf "Removing bottles... "

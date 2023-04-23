@@ -1,14 +1,14 @@
-#!/bin/sh
+#!/bin/bash
 set -eu
 
-readonly HOMEBREW_PREFIX="{{HOMEBREW_PREFIX}}"
-readonly BREW="${HOMEBREW_PREFIX}/bin/brew"
-readonly BREW_LOGDIR="${HOME}/Library/Logs/Homebrew"
-readonly BREW_UPDATE_LOG="${BREW_LOGDIR}/update.log"
+declare -r HOMEBREW_PREFIX="{{HOMEBREW_PREFIX}}"
+declare -r HOMEBREW_BREW=${HOMEBREW_PREFIX}/bin/brew
+declare -r HOMEBREW_LOGS=${HOME}/Library/Logs/Homebrew
+declare -r HOMEBREW_UPDATE_LOG=${HOMEBREW_LOGS}/update.log
 
-mkdir -p "${BREW_LOGDIR}"
+mkdir -p "${HOMEBREW_LOGS}"
 
-cat <<EOT >>"${BREW_UPDATE_LOG}"
+cat <<EOT >>"${HOMEBREW_UPDATE_LOG}"
 
 #
 # $(date)
@@ -16,13 +16,11 @@ cat <<EOT >>"${BREW_UPDATE_LOG}"
 
 EOT
 
-"${BREW}" update >>"${BREW_UPDATE_LOG}" 2>&1
+"${HOMEBREW_BREW}" update >>"${HOMEBREW_UPDATE_LOG}" 2>&1
 
-readonly TERMINAL_NOTIFIER="${HOMEBREW_PREFIX}/bin/terminal-notifier"
-readonly APP_ID=com.apple.Terminal
+declare -r TERMINAL_NOTIFIER=${HOMEBREW_PREFIX}/bin/terminal-notifier
+declare -r APP_ID=com.apple.Terminal
 
-[ -x "${TERMINAL_NOTIFIER}" ] || exit 0
-
-if [ -n "$("${BREW}" outdated --quiet)" ]; then
+if [[ -x "${TERMINAL_NOTIFIER}" ]] && [[ -n "$("${HOMEBREW_BREW}" outdated --quiet)" ]]; then
     "${TERMINAL_NOTIFIER}" -title Homebrew -message "Found outdated formulae" -sender "${APP_ID}"
 fi
