@@ -11,7 +11,7 @@ readonly DOWNLOADS_SIZE
 echo "Downloads size: ${DOWNLOADS_SIZE}"
 
 proc_start() {
-    printf "\e[34m==> \e[1;30m"
+    printf "\e[34m==>\e[0m \e[1m"
 }
 
 proc_end() {
@@ -21,9 +21,9 @@ proc_end() {
 proc_start
 
 if [ "${DOWNLOADS_SIZE}" = 0B ]; then
-    printf "Nothing to do."
+    printf "No bottle."
 else
-    printf "Cleanup... "
+    printf "Removing bottles... "
     rm downloads/*
     printf "done."
 fi
@@ -32,7 +32,7 @@ proc_end
 
 proc_start
 
-printf "Remove broken symlink files... "
+printf "Removing broken symlink files... "
 find -L . Cask -maxdepth 1 -type l -exec rm -f '{}' +
 printf "done."
 
